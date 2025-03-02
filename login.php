@@ -1,6 +1,6 @@
 
 <?php
-//This is a base (DO NOT TRUST!)
+//This is a base (DO NOT TRUST!) I have no clue what I'm doing here
 
 // Start session
 session_start();
