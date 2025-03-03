@@ -13,7 +13,6 @@ sudo systemctl enable apache2
 #install MySQL
 sudo apt install mysql-server -y
 
-
 #setup MySQL (basic config)
   MYSQL_ROOT_PASSWORD='Password@123'
   MYSQL=$(grep 'temporary password' /var/log/mysqld.log | awk '{print $11}')
