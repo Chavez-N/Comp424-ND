@@ -1,0 +1,126 @@
+<?php
+// Start session
+session_start();
+
+// Generate CSRF token if one doesn't exist
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-form">
+            <h1>Create New Account</h1>
+            
+            <div id="signup-error" class="error-message"></div>
+            <div id="signup-success" class="success-message"></div>
+            
+            <form id="signup-form" action="process_signup.php" method="POST">
+                <!-- CSRF Protection -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthdate">Birth Date:</label>
+                    <input type="date" id="birthdate" name="birthdate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <div id="password-strength" class="password-strength"></div>
+                    <div id="password-requirements">
+                        Password must contain:
+                        <ul>
+                            <li id="req-length">At least 10 characters</li>
+                            <li id="req-uppercase">At least one uppercase letter</li>
+                            <li id="req-lowercase">At least one lowercase letter</li>
+                            <li id="req-number">At least one number</li>
+                            <li id="req-special">At least one special character</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <div id="password-match"></div>
+                </div>
+                
+                <div class="security-questions">
+                    <h3>Security Questions</h3>
+                    <p>Please answer the following security questions. These will be used to verify your identity if you need to recover your account.</p>
+                    
+                    <div class="security-question">
+                        <label for="security_question_1">Question 1:</label>
+                        <select id="security_question_1" name="security_question_1" required>
+                            <option value="">Select a question</option>
+                            <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+                            <option value="In what city were you born?">In what city were you born?</option>
+                            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                            <option value="What high school did you attend?">What high school did you attend?</option>
+                            <option value="What was the make of your first car?">What was the make of your first car?</option>
+                        </select>
+                        <input type="text" id="security_answer_1" name="security_answer_1" placeholder="Your answer" required>
+                    </div>
+                    
+                    <div class="security-question">
+                        <label for="security_question_2">Question 2:</label>
+                        <select id="security_question_2" name="security_question_2" required>
+                            <option value="">Select a question</option>
+                            <option value="What is the name of your favorite childhood teacher?">What is the name of your favorite childhood teacher?</option>
+                            <option value="What is your favorite movie?">What is your favorite movie?</option>
+                            <option value="What was your childhood nickname?">What was your childhood nickname?</option>
+                            <option value="What is your favorite food?">What is your favorite food?</option>
+                            <option value="What was the street you grew up on?">What was the street you grew up on?</option>
+                        </select>
+                        <input type="text" id="security_answer_2" name="security_answer_2" placeholder="Your answer" required>
+                    </div>
+                </div>
+                
+                <div class="captcha-container">
+                    <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn">Create Account</button>
+                </div>
+                
+                <div class="links">
+                    <a href="index.html">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/signup.js"></script>
+</body>
+</html>
