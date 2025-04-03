@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - COMP 424 Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-box">
+            <h1>Welcome, <span id="user-name">User</span></h1>
+            <div class="stats">
+                <p>You have logged in <span id="login-count">0</span> times</p>
+                <p>Last login date: <span id="last-login">Never</span></p>
+            </div>
+            <div class="download-section">
+                <h2>Company Confidential File</h2>
+                <button id="download-btn" class="login-btn">Download File</button>
+            </div>
+            <div class="links">
+                <a href="logout.php">Logout</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // This would be populated from PHP session data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example data - would come from server in real implementation
+            document.getElementById('user-name').textContent = 'John Doe';
+            document.getElementById('login-count').textContent = '5';
+            document.getElementById('last-login').textContent = new Date().toLocaleString();
+            
+            document.getElementById('download-btn').addEventListener('click', function() {
+                window.location.href = 'download.php?file=company_confidential_file.txt';
+            });
+        });
+    </script>
+</body>
+</html>
