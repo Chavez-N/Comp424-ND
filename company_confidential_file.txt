@@ -1,0 +1,22 @@
+COMPANY CONFIDENTIAL
+--------------------
+Project: COMP 424 Security Implementation
+Authorized Personnel Only
+Classification Level: Top Secret
+Last Updated: 2024-03-15
+
+This document contains proprietary information belonging to
+COMP 424 Project Group. Unauthorized access, disclosure,
+or distribution is strictly prohibited.
+
+Security Guidelines:
+1. Do not share with unauthorized personnel
+2. Store in secure locations only
+3. Destroy when no longer needed
+4. Report any security breaches immediately
+
+Project Details:
+- Security Implementation Phase 1
+- Team Members: [REDACTED]
+- Project Timeline: Spring 2024
+- Key Technologies: PHP, MySQL, HTML/CSS
