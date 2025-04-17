@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$db = 'your_database';
-$user = 'your_user';
-$pass = 'your_password';
+$db = '424Project';
+$user = 'root';
+$pass = ''; //no password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
