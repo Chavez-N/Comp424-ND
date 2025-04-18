@@ -1,6 +1,11 @@
 function getPDOConnection() {
     static $pdo = null;
 
+if (!isset($_POST['g-recaptcha-response'])) {
+    die("CAPTCHA not submitted. Please try again.");
+}
+
+
     if ($pdo === null) {
         $host = 'localhost';
         $db = '424Project';
