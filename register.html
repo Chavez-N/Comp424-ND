@@ -6,7 +6,7 @@
     <title>Register - COMP 424 Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 </head>
 <body>
     <div class="login-container">
@@ -33,7 +33,18 @@
                     <label for="confirm_password">Confirm Password</label>
                     <input type="password" id="confirm_password" name="confirm_password" required>
                 </div>
-                <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE"></div>
+                <!---<div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE"> </div> --->
+                
+                <!-- Honeypot field: hidden from users -->
+                <div style="display:none;">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" autocomplete="off" />
+                </div>
+                <!-- Simple math problem as Simple CAPTACHA ALTERNATIVE-->
+                <div class="input-group">
+                    <label for="math_answer"> You're not a robot. Prove it. What is 3 + 4?</label>
+                    <input type="text" id="math_answer" name="math_answer" required />
+                </div>
                 <button type="submit" class="login-btn">Register</button>
             </form>
             <div class="links">

@@ -2,6 +2,7 @@
 require 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    /*
     // Verify reCAPTCHA first
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $recaptcha_secret = 'YOUR_RECAPTCHA_SECRET';
@@ -24,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$recaptcha_result->success) {
         die('reCAPTCHA verification failed');
     }
+    */
 
     // Validate inputs
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
