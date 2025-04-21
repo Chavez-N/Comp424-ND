@@ -3,7 +3,6 @@ require 'config.php';
 require 'mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //// ALTERNATIVE TO CAPTCHA and reCAPTCHA
     // Honeypot validation: should be empty
     if (!empty($_POST['website'])) {
         die("Bot detected.");

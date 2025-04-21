@@ -3,30 +3,6 @@ require 'config.php';
 require 'mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    /*
-    // Verify reCAPTCHA first
-    $recaptcha_response = $_POST['g-recaptcha-response'];
-    $recaptcha_secret = 'YOUR_RECAPTCHA_SECRET';
-    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptcha_data = [
-        'secret' => $recaptcha_secret,
-        'response' => $recaptcha_response
-    ];
-    
-    $recaptcha_options = [
-        'http' => [
-            'method' => 'POST',
-            'content' => http_build_query($recaptcha_data)
-        ]
-    ];
-    
-    $recaptcha_context = stream_context_create($recaptcha_options);
-    $recaptcha_result = json_decode(file_get_contents($recaptcha_url, false, $recaptcha_context));
-    
-    if (!$recaptcha_result->success) {
-        die('reCAPTCHA verification failed');
-    }
-    */
 
     // Process email
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
