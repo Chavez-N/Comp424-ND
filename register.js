@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
     const strengthDisplay = document.getElementById('password-strength');
+    const confirmFeedback = document.getElementById('confirm-password-feedback');
 
-    passwordInput.addEventListener('input', function () {
-        const value = passwordInput.value;
+    function checkPasswordStrength(value) {
         let strength = 0;
 
         if (value.length >= 8) strength++;
@@ -32,5 +33,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
         }
         strengthDisplay.textContent = 'Password Strength: ' + message;
+    }
+
+    function checkPasswordMatch() {
+        if (confirmPasswordInput.value === '') {
+            confirmFeedback.textContent = '';
+            return;
+        }
+        if (passwordInput.value === confirmPasswordInput.value) {
+            confirmFeedback.textContent = 'Passwords match';
+            confirmFeedback.style.color = 'green';
+        } else {
+            confirmFeedback.textContent = 'Passwords do not match';
+            confirmFeedback.style.color = 'red';
+        }
+    }
+
+    passwordInput.addEventListener('input', function () {
+        checkPasswordStrength(passwordInput.value);
+        checkPasswordMatch();
+    });
+
+    confirmPasswordInput.addEventListener('input', function () {
+        checkPasswordMatch();
     });
 });
