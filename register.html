@@ -10,7 +10,7 @@
     <div class="login-container">
         <div class="login-box"> <!---Adjusted-->
             <h1>Register</h1>
-            <form action="register.php" method="POST">
+            <form action="register.php" method="POST" id="registerForm">
                 <div class="input-group">
                     <label for="first_name">First Name</label>
                     <input type="text" id="first_name" name="first_name" required>
@@ -24,12 +24,29 @@
                     <input type="email" id="email" name="email" required>
                 </div>
                 <div class="input-group">
+                    <label for="birth_date">Birth Date</label>
+                    <input type="date" id="birth_date" name="birth_date" required>
+                </div>
+                <div class="input-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
+                    <div id="password-strength" style="font-weight: bold; margin-top: 5px;"></div>
                 </div>
                 <div class="input-group">
                     <label for="confirm_password">Confirm Password</label>
                     <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="input-group">
+                    <label for="security_question_1">Security Question 1: What is your mother's maiden name?</label>
+                    <input type="text" id="security_question_1" name="security_question_1" required>
+                </div>
+                <div class="input-group">
+                    <label for="security_question_2">Security Question 2: What was the name of your first pet?</label>
+                    <input type="text" id="security_question_2" name="security_question_2" required>
+                </div>
+                <div class="input-group">
+                    <label for="security_question_3">Security Question 3: What city were you born in?</label>
+                    <input type="text" id="security_question_3" name="security_question_3" required>
                 </div>
                 
                 <!-- Honeypot field: hidden from users -->

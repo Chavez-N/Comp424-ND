@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +14,14 @@
     <div class="login-container">
         <div class="login-box"> <!---Adjusted-->
             <h1>Secure Login</h1>
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="error-message"><?php echo htmlspecialchars($_SESSION['error']); ?></div>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['message'])): ?>
+                <div class="success-message"><?php echo htmlspecialchars($_SESSION['message']); ?></div>
+                <?php unset($_SESSION['message']); ?>
+            <?php endif; ?>
             <form action="login.php" method="POST">
                 <div class="input-group">
                     <label for="email">Email</label>
@@ -24,7 +35,7 @@
             </form>
             <div class="links">
                 <a href="register.html">New User? Sign Up</a>
-                <a href="forgot-password.html">Forgot Password?</a>
+                <a href="forgot-password.html">Forgot Username or Password?</a>
             </div>
         </div>
     </div>

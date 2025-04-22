@@ -1,3 +1,4 @@
+<?php
 function getPDOConnection() {
     static $pdo = null;
 
@@ -12,7 +13,8 @@ function getPDOConnection() {
             $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
+            // Return null instead of dying on connection failure
+            return null;
         }
     }
 
