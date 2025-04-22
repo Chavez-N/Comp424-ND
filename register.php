@@ -1,22 +1,26 @@
 <?php
+// Start session to store temporary user data
 session_start();
+
+// Include configuration and mailer files
 require 'config.php';
 require 'mailer.php';
 
+// Process registration form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Honeypot validation: should be empty
+    // Honeypot validation to detect bots (field should be empty)
     if (!empty($_POST['website'])) {
         error_log("Bot detected during registration attempt.");
         die("Bot detected.");
     }
-    // Math problem validation
+    // Simple CAPTCHA: math problem validation
     $expected_answer = 7;
     if (!isset($_POST['math_answer']) || intval($_POST['math_answer']) !== $expected_answer) {
         error_log("Failed CAPTCHA math problem during registration attempt.");
         die("Incorrect answer to the math problem.");
     }
 
-    // Sanitize and validate inputs
+    // Sanitize and validate user inputs to prevent injection attacks
     $first_name = filter_var($_POST['first_name'], FILTER_SANITIZE_STRING);
     $last_name = filter_var($_POST['last_name'], FILTER_SANITIZE_STRING);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -27,23 +31,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $security_question_2 = filter_var($_POST['security_question_2'], FILTER_SANITIZE_STRING);
     $security_question_3 = filter_var($_POST['security_question_3'], FILTER_SANITIZE_STRING);
 
-    // Password confirmation validation
+    // Validate password confirmation
     if ($password !== $confirm_password) {
         error_log("Password confirmation mismatch for email: $email");
         die("Passwords do not match.");
     }
 
-    // Password strength validation (example: min 8 chars, at least one uppercase, one number)
+    // Password strength validation: minimum 8 characters, at least one uppercase letter and one number
     $password_pattern = '/^(?=.*[A-Z])(?=.*\d).{8,}$/';
     if (!preg_match($password_pattern, $password)) {
         error_log("Weak password attempt for email: $email");
         die("Password must be at least 8 characters long, include at least one uppercase letter and one number.");
     }
 
+    // Hash the password securely
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    // Generate a unique token for email verification
     $token = bin2hex(random_bytes(50));
 
-    // Store user data in session variables temporarily
+    // Store user data temporarily in session variables before final registration
     $_SESSION['temp_user'] = [
         'first_name' => $first_name,
         'last_name' => $last_name,
@@ -56,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'security_question_3' => $security_question_3
     ];
 
-    // Output the stored user data
+    // Output the stored user data for debugging or confirmation
     echo "<h2>Temporary User Data Stored:</h2>";
     echo "<ul>";
     echo "<li>First Name: " . htmlspecialchars($_SESSION['temp_user']['first_name']) . "</li>";
