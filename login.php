@@ -9,6 +9,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require __DIR__ . '/config.php';
 
+require 'config.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize inputs
     $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
