@@ -1,6 +1,8 @@
 <?php
 // Start session to store temporary user data
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Include configuration and mailer files
 require 'config.php';
