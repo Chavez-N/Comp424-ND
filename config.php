@@ -20,4 +20,4 @@ function getPDOConnection() {
 
     return $pdo;
 }
-
+?>
