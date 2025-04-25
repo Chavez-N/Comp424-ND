@@ -30,5 +30,6 @@ function getPDOConnection() {
         "[$when] $email — $status\n",
         FILE_APPEND
     );
+    }
 }
 ?>
