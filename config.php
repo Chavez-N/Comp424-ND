@@ -19,5 +19,16 @@ function getPDOConnection() {
     }
 
     return $pdo;
+    
+    function log_login_attempt(string $email, bool $success): void {
+    $status = $success ? 'SUCCESS' : 'FAIL';
+    $when   = date('Y-m-d H:i:s');
+    
+    // Append to a log file in the same directory:
+    file_put_contents(
+        __DIR__ . '/login_attempts.log',
+        "[$when] $email — $status\n",
+        FILE_APPEND
+    );
 }
 ?>
