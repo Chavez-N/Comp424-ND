@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("UPDATE users SET password = ?, reset_code = NULL, reset_expires = NULL WHERE email = ?");
     $stmt->execute([$hashed_password, $email]);
     
-    header("Location: login.html?password_reset=1");
+    header("Location: login.php?password_reset=1");
     exit();
 }
 ?>
