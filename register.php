@@ -65,17 +65,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'security_question_3' => $security_question_3
     ];
 
-    // Output the stored user data for debugging or confirmation
-    echo "<h2>Temporary User Data Stored:</h2>";
-    echo "<ul>";
-    echo "<li>First Name: " . htmlspecialchars($_SESSION['temp_user']['first_name']) . "</li>";
-    echo "<li>Last Name: " . htmlspecialchars($_SESSION['temp_user']['last_name']) . "</li>";
-    echo "<li>Email: " . htmlspecialchars($_SESSION['temp_user']['email']) . "</li>";
-    echo "<li>Birth Date: " . htmlspecialchars($_SESSION['temp_user']['birth_date']) . "</li>";
-    echo "<li>Security Question 1: " . htmlspecialchars($_SESSION['temp_user']['security_question_1']) . "</li>";
-    echo "<li>Security Question 2: " . htmlspecialchars($_SESSION['temp_user']['security_question_2']) . "</li>";
-    echo "<li>Security Question 3: " . htmlspecialchars($_SESSION['temp_user']['security_question_3']) . "</li>";
-    echo "<li>Token: " . htmlspecialchars($_SESSION['temp_user']['token']) . "</li>";
-    echo "</ul>";
+       // … after validation, sanitization, hashing, token generation …
+
+    // Insert into DB
+    $pdo = getPDOConnection();
+    if ($pdo !== null) {
+        $stmt = $pdo->prepare(
+            "INSERT INTO users (first_name, last_name, email, birth_date, password, token, verified, security_question_1, security_question_2, security_question_3)
+             VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?)"
+        );
+        $stmt->execute([
+            $first_name,
+            $last_name,
+            $email,
+            $birth_date,
+            $password_hash,
+            $token,
+            $security_question_1,
+            $security_question_2,
+            $security_question_3
+        ]);
+    }
+
+    // (Optional) Send verification email
+    if (function_exists('sendVerificationEmail')) {
+        sendVerificationEmail($email, $token);
+    }
+
+    // Redirect to login
+    header("Location: login.php");
+    exit;
+
+    
 }
 ?>
