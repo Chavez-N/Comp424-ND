@@ -19,18 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['old_email'] = $email;
 
     $pdo = getPDOConnection();
-    // Fallback credentials if DB is down
-    $default_email    = 'torosyandiran@gmail.com';
-    $default_password = 'Diran#123';
 
     // Authenticate
     $authenticated = false;
     $need_verify   = false;
 
     if ($pdo === null) {
-        if ($email === $default_email && $password === $default_password) {
-            $authenticated = true;
-        }
+        $_SESSION['error'] = "Warning: BackEnd Connection is not connected.";
     } else {
         $stmt = $pdo->prepare("SELECT id, password, verified FROM users WHERE email = ?");
         $stmt->execute([$email]);
