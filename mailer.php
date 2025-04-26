@@ -4,7 +4,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Include PHPMailer autoloader
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
+
 
 // Function to send verification email with a unique verification link
 function sendVerificationEmail($email, $verification_link) {
