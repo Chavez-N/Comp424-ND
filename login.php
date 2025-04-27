@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($pdo === null) {
         $_SESSION['error'] = "Warning: Backend connection failed.";
     } else {
-        // 2) Prepare statement using correct column name password_hash
+        // 2) Prepare statement fetching only id and password_hash
         $stmt = $pdo->prepare(
             "SELECT id, password_hash
              FROM users
@@ -33,15 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 3) Verify password against stored hash
         if ($user && password_verify($password, $user['password_hash'])) {
-            if ($user['verified']) {
-                $_SESSION['user_id'] = $user['id'];
-                log_login_attempt($email, true);
-                header("Location: dashboard.html");
-                exit;
-            } else {
-                log_login_attempt($email, false);
-                $_SESSION['error'] = "Please verify your email before logging in.";
-            }
+            $_SESSION['user_id'] = $user['id'];
+            log_login_attempt($email, true);
+            header("Location: dashboard.html");
+            exit;
         } else {
             log_login_attempt($email, false);
             $_SESSION['error'] = "Invalid email or password.";
