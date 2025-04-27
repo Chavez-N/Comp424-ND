@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // 2) Prepare statement using correct column name password_hash
         $stmt = $pdo->prepare(
-            "SELECT id, password_hash, verified
+            "SELECT id, password_hash
              FROM users
             WHERE email = ?"
         );
