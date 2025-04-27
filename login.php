@@ -9,53 +9,46 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require __DIR__ . '/config.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize inputs
+    // 1) Sanitize inputs
     $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password_hash = $_POST['password'];
+    $password = $_POST['password'];
 
-    // Save old input so we can repopulate
+    // Save old input to repopulate on error
     $_SESSION['old_email'] = $email;
 
     $pdo = getPDOConnection();
 
-    // Authenticate
-    $authenticated = false;
-    $need_verify   = false;
-
     if ($pdo === null) {
-        $_SESSION['error'] = "Warning: BackEnd Connection is not connected.";
+        $_SESSION['error'] = "Warning: Backend connection failed.";
     } else {
-        $stmt = $pdo->prepare("SELECT id, password, verified FROM users WHERE email = ?");
+        // 2) Prepare statement using correct column name password_hash
+        $stmt = $pdo->prepare(
+            "SELECT id, password_hash, verified
+             FROM users
+            WHERE email = ?"
+        );
         $stmt->execute([$email]);
-        $user = $stmt->fetch();
-        if ($user && password_verify($password, $user['password'])) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // 3) Verify password against stored hash
+        if ($user && password_verify($password, $user['password_hash'])) {
             if ($user['verified']) {
                 $_SESSION['user_id'] = $user['id'];
                 log_login_attempt($email, true);
                 header("Location: dashboard.html");
                 exit;
             } else {
-                $need_verify = true;
+                log_login_attempt($email, false);
+                $_SESSION['error'] = "Please verify your email before logging in.";
             }
+        } else {
+            log_login_attempt($email, false);
+            $_SESSION['error'] = "Invalid email or password.";
         }
     }
 
-    if ($authenticated) {
-        $_SESSION['user_id'] = ($pdo===null ? 0 : $user['id']);
-        log_login_attempt($email, true);
-        header("Location: dashboard.html");
-        exit;
-    } elseif ($need_verify) {
-        log_login_attempt($email, false);
-        $_SESSION['error'] = "Please verify your email before logging in.";
-    } else {
-        log_login_attempt($email, false);
-        $_SESSION['error'] = "Invalid email or password.";
-    }
-
-    // On error, redirect back here to show the form
+    // On failure, redirect back to login form
     header("Location: login.php");
     exit;
 }
@@ -87,10 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             id="email"
             name="email"
             required
-            value="<?php
-              echo htmlspecialchars($_SESSION['old_email'] ?? '');
-              unset($_SESSION['old_email']);
-            ?>"
+            value="<?php echo htmlspecialchars($_SESSION['old_email'] ?? ''); unset($_SESSION['old_email']); ?>"
           >
         </div>
         <div class="input-group">
@@ -108,3 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </body>
 </html>
+
