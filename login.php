@@ -13,7 +13,7 @@ require __DIR__ . '/config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize inputs
     $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'];
+    $password_hash = $_POST['password'];
 
     // Save old input so we can repopulate
     $_SESSION['old_email'] = $email;
