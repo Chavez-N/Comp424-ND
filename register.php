@@ -71,6 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = getPDOConnection();
     if ($pdo !== null) {
         $stmt = $pdo->prepare(
+            $pdo = getPDOConnection();
+                if ($pdo === null) {
+                // This will stop execution and show you the PDO connection error
+                die('❌ Database connection failed. Check your credentials and that MySQL is running.');
+                }
+
             "INSERT INTO users (first_name, last_name, email, birth_date, password, token, verified, security_question_1, security_question_2, security_question_3)
              VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?)"
         );
