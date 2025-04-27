@@ -30,7 +30,7 @@ function sendVerificationEmail($email, $verification_link) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'neotide10@gmail.com'; // Replace with your Gmail address
-        $mail->Password = 'zbrv ncyg thfu vffz'; // Replace with your Gmail App Password
+        $mail->Password = 'zbrvncygthfuvffz'; // Replace with your Gmail App Password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
@@ -47,6 +47,7 @@ function sendVerificationEmail($email, $verification_link) {
         $mail->send();
     } catch (Exception $e) {
         // Handle errors in sending email
+        error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
         echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
@@ -60,7 +61,7 @@ function sendPasswordResetEmail($email, $code) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'neotide10@gmail.com'; // Replace with your Gmail address
-        $mail->Password = 'zbrv ncyg thfu vffz'; // Replace with your Gmail App Password
+        $mail->Password = 'zbrvncygthfuvffz'; // Replace with your Gmail App Password (spaces removed)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
@@ -78,6 +79,7 @@ function sendPasswordResetEmail($email, $code) {
         $mail->send();
     } catch (Exception $e) {
         // Handle errors in sending email
+        error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
         echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
