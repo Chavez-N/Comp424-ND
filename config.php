@@ -7,6 +7,8 @@
 function getPDOConnection() {
     static $pdo = null;
     if ($pdo === null) {
+        /*Verify that the database credentials (host, database name, username, password)
+         in config.php match the server's MySQL setup.*/
         $host = 'localhost';
         $db   = '424Project';
         $user = 'root';
@@ -19,8 +21,13 @@ function getPDOConnection() {
             );
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
+            error_log("Database connection failed: " . $e->getMessage());
+            // Optionally comment the next line to display error on screen for debugging
+            echo "Database connection failed: " . $e->getMessage();
             return null;
         }
+        /*Check the server's error log for any database connection error messages logged by PHP.
+        This should help identify and fix the root cause of the "Call to a member function prepare() on null" error.*/ 
     }
 
     return $pdo;
