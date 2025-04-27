@@ -23,12 +23,36 @@ function getPDOConnection() {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             error_log("Database connection failed: " . $e->getMessage());
-            // Uncomment the next line if you need to see the error in-browser
             echo "Database connection failed: " . $e->getMessage();
             return null;
         }
     }
-
     return $pdo;
 }
 
+/**
+ * Log a login attempt to the database.
+ *
+ * @param string $email The email address attempting login
+ * @param bool $success Whether the login was successful
+ */
+function log_login_attempt($email, $success) {
+    $pdo = getPDOConnection();
+    if ($pdo === null) {
+        error_log("Failed to log login attempt: No database connection.");
+        return;
+    }
+
+    try {
+        $stmt = $pdo->prepare(
+            "INSERT INTO login_attempts (email, success, attempt_time) VALUES (?, ?, NOW())"
+        );
+        $stmt->execute([
+            $email,
+            $success ? 1 : 0
+        ]);
+    } catch (PDOException $e) {
+        error_log("Failed to log login attempt: " . $e->getMessage());
+    }
+}
+?>
