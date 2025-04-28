@@ -5,7 +5,8 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 // Include PHPMailer autoloader
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
 
 /**
  * Send a verification email with a unique verification link.
