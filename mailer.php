@@ -35,7 +35,7 @@ function sendVerificationEmail($email, $verification_link) {
         $mail->Port = 587;
 
         // Set sender and recipient
-        $mail->setFrom('no-reply@yourwebsite.com', 'Your Website');
+        $mail->setFrom('neotide10@gmail.com', 'Your Website'); // use your real Gmail here
         $mail->addAddress($email);
 
         // Email content settings
@@ -66,7 +66,7 @@ function sendPasswordResetEmail($email, $code) {
         $mail->Port = 587;
 
         // Set sender and recipient
-        $mail->setFrom('no-reply@yourwebsite.com', 'Your Website');
+        $mail->setFrom('neotide10@gmail.com', 'Your Website'); // use your real Gmail here
         $mail->addAddress($email);
 
         // Email content settings
