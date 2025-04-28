@@ -6,81 +6,94 @@ use PHPMailer\PHPMailer\Exception;
 // Include PHPMailer autoloader
 require __DIR__ . '/vendor/autoload.php';
 
-/*
-Instructions to connect mailer.php to Gmail SMTP:
-
-1. Use your actual Gmail email address in the Username field.
-2. For the Password field, you need to generate an App Password if you have 2-Step Verification enabled on your Google account.
-   - Go to https://myaccount.google.com/security
-   - Under "Signing in to Google", select "App Passwords"
-   - Generate a new app password for "Mail" and your device
-   - Use this 16-character password in the Password field below
-3. Ensure "Less secure app access" is disabled (Google is phasing this out).
-4. Alternatively, you can implement OAuth2 authentication with PHPMailer for Gmail, but App Passwords are simpler for most cases.
-5. Make sure your server allows outbound connections on port 587.
-
-*/
-
-// Function to send verification email with a unique verification link
+/**
+ * Send a verification email with a unique verification link.
+ * Debug output is visible in the browser for troubleshooting.
+ *
+ * @param string $email Recipient email address
+ * @param string $verification_link URL to verify the account
+ */
 function sendVerificationEmail($email, $verification_link) {
     $mail = new PHPMailer(true);
     try {
-        // SMTP configuration for sending email via Gmail SMTP
+        // SMTP server configuration
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'neotide10@gmail.com'; // Replace with your Gmail address
-        $mail->Password = 'zbrvncygthfuvffz'; // Replace with your Gmail App Password
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->AuthType   = 'LOGIN';                  // Force LOGIN auth
+        $mail->Username   = 'neotide10@gmail.com';    // Your Gmail address
+        $mail->Password   = 'YOUR_APP_PASSWORD';      // Your App Password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Port       = 587;
 
-        // Set sender and recipient
-        $mail->setFrom('neotide10@gmail.com', 'Your Website'); // use your real Gmail here
+        // Debug settings (visible on page)
+        $mail->SMTPDebug   = SMTP::DEBUG_SERVER;     // Full SMTP trace
+        $mail->Debugoutput = 'html';                 // HTML formatted debug output
+
+        // Sender and recipient
+        $mail->setFrom('neotide10@gmail.com', 'Your Website');
         $mail->addAddress($email);
 
-        // Email content settings
+        // Email content
         $mail->isHTML(true);
         $mail->Subject = 'Verify Your Email';
-        $mail->Body = "Click the link to verify your account: <a href='$verification_link'>$verification_link</a>";
+        $mail->Body    = sprintf(
+            "<p>Click the link below to verify your account:</p><p><a href=\"%s\">%s</a></p>",
+            htmlspecialchars($verification_link),
+            htmlspecialchars($verification_link)
+        );
 
-        // Send the email
+        // Send the message
         $mail->send();
     } catch (Exception $e) {
-        // Handle errors in sending email
-        error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
-        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // Display and log errors
+        echo '<h3>Mailer Error:</h3><pre>' . htmlspecialchars($mail->ErrorInfo) . '</pre>';
+        error_log('Mailer Error (verification): ' . $mail->ErrorInfo);
     }
 }
 
-// Function to send password reset email with a reset code
+/**
+ * Send a password reset email with a reset code.
+ * Debug output is visible in the browser for troubleshooting.
+ *
+ * @param string $email Recipient email address
+ * @param string $code One-time reset code
+ */
 function sendPasswordResetEmail($email, $code) {
     $mail = new PHPMailer(true);
     try {
-        // SMTP configuration for sending email via Gmail SMTP
+        // SMTP server configuration
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'neotide10@gmail.com'; // Replace with your Gmail address
-        $mail->Password = 'zbrvncygthfuvffz'; // Replace with your Gmail App Password (spaces removed)
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->AuthType   = 'LOGIN';
+        $mail->Username   = 'neotide10@gmail.com';
+        $mail->Password   = 'YOUR_APP_PASSWORD';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Port       = 587;
 
-        // Set sender and recipient
-        $mail->setFrom('neotide10@gmail.com', 'Your Website'); // use your real Gmail here
+        // Debug settings (visible on page)
+        $mail->SMTPDebug   = SMTP::DEBUG_SERVER;
+        $mail->Debugoutput = 'html';
+
+        // Sender and recipient
+        $mail->setFrom('neotide10@gmail.com', 'Your Website');
         $mail->addAddress($email);
 
-        // Email content settings
+        // Email content
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Code';
-        $mail->Body = "Your password reset code is: <strong>$code</strong><br><br>
-                      This code will expire in 1 hour. If you didn't request this, please ignore this email.";
+        $mail->Body    = sprintf(
+            "<p>Your password reset code is: <strong>%s</strong></p><p>This code will expire in 1 hour.</p>",
+            htmlspecialchars($code)
+        );
 
-        // Send the email
+        // Send the message
         $mail->send();
     } catch (Exception $e) {
-        // Handle errors in sending email
-        error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
-        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // Display and log errors
+        echo '<h3>Mailer Error:</h3><pre>' . htmlspecialchars($mail->ErrorInfo) . '</pre>';
+        error_log('Mailer Error (reset): ' . $mail->ErrorInfo);
     }
 }
 ?>
