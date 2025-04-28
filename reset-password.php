@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+require 'mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate inputs
