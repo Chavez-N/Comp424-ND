@@ -2,6 +2,7 @@
 // Use PHPMailer for sending emails securely
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 // Include PHPMailer autoloader
 require __DIR__ . '/vendor/autoload.php';
@@ -97,3 +98,4 @@ function sendPasswordResetEmail($email, $code) {
     }
 }
 ?>
+
