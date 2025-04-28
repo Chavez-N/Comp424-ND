@@ -16,6 +16,11 @@ require_once __DIR__ . '/vendor/autoload.php';
  * @param string $verification_link URL to verify the account
  */
 function sendVerificationEmail($email, $verification_link) {
+    // Disable SMTP sending for EmailJS integration
+    if (defined('EMAILJS_ENABLED') && EMAILJS_ENABLED) {
+        // EmailJS enabled, skip SMTP sending
+        return true;
+    }
     $mail = new PHPMailer(true);
     try {
         // SMTP server configuration
@@ -75,6 +80,11 @@ function sendVerificationEmail($email, $verification_link) {
  * @param string $code One-time reset code
  */
 function sendPasswordResetEmail($email, $code) {
+    // Disable SMTP sending for EmailJS integration
+    if (defined('EMAILJS_ENABLED') && EMAILJS_ENABLED) {
+        // EmailJS enabled, skip SMTP sending
+        return true;
+    }
     $mail = new PHPMailer(true);
     try {
         // SMTP server configuration

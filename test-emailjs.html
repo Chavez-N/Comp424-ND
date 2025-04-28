@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test EmailJS Integration</title>
+    <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
+    <script src="emailjs-integration.js"></script>
+</head>
+<body>
+    <h1>Test EmailJS Integration</h1>
+
+    <h2>Send Verification Email</h2>
+    <input type="email" id="verificationEmail" placeholder="Recipient Email" />
+    <input type="text" id="verificationLink" placeholder="Verification Link" />
+    <button onclick="testSendVerificationEmail()">Send Verification Email</button>
+    <p id="verificationStatus"></p>
+
+    <h2>Send Password Reset Email</h2>
+    <input type="email" id="resetEmail" placeholder="Recipient Email" />
+    <input type="text" id="resetCode" placeholder="Reset Code" />
+    <button onclick="testSendPasswordResetEmail()">Send Password Reset Email</button>
+    <p id="resetStatus"></p>
+
+    <script>
+        function testSendVerificationEmail() {
+            const to_email = document.getElementById('verificationEmail').value;
+            const verification_link = document.getElementById('verificationLink').value;
+            window.sendVerificationEmail(to_email, verification_link)
+                .then((response) => {
+                    console.log('Verification email sent:', response);
+                    document.getElementById('verificationStatus').textContent = 'Verification email sent successfully.';
+                })
+                .catch((error) => {
+                    console.error('Verification email error:', error);
+                    document.getElementById('verificationStatus').textContent = 'Failed to send verification email: ' + error.text;
+                });
+        }
+
+        function testSendPasswordResetEmail() {
+            const to_email = document.getElementById('resetEmail').value;
+            const reset_code = document.getElementById('resetCode').value;
+            window.sendPasswordResetEmail(to_email, reset_code)
+                .then((response) => {
+                    console.log('Password reset email sent:', response);
+                    document.getElementById('resetStatus').textContent = 'Password reset email sent successfully.';
+                })
+                .catch((error) => {
+                    console.error('Password reset email error:', error);
+                    document.getElementById('resetStatus').textContent = 'Failed to send password reset email: ' + error.text;
+                });
+        }
+    </script>
+</body>
+</html>
