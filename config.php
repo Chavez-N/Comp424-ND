@@ -1,4 +1,6 @@
 <?php
+define('EMAILJS_ENABLED', true);
+
 /**
  * Return a PDO connection or null on failure.
  *

@@ -100,17 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         // 11) Confirm insert succeeded
-        if ($stmt->rowCount() === 1) {
-            // Send verification email
-            if (function_exists('sendVerificationEmail')) {
-                sendVerificationEmail($email, $token);
-            }
-            // Redirect to login
-            header("Location: login.php");
-            exit;
-        } else {
-            die('❌ Registration ran but no rows were added. Check your table defaults and triggers.');
-        }
+if ($stmt->rowCount() === 1) {
+    // Send verification email
+    header('Content-Type: application/json');
+    echo json_encode(['email' => $email, 'token' => $token]);
+    exit;
+} else {
+    die('❌ Registration ran but no rows were added. Check your table defaults and triggers.');
+}
     } catch (PDOException $e) {
         // Display SQL error for debugging
         die('❌ Registration error: ' . $e->getMessage());

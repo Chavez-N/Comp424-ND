@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/mailer.php';
+//require_once __DIR__ . '/mailer.php';
 session_start();
 
 // Establish PDO connection
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $update->execute([$hashed_password, $user['id']]);
 
     // Optionally send confirmation email
-    sendPasswordResetEmail($email, $code);
+    // sendPasswordResetEmail($email, $code);
 
     // Redirect to login with success flag
     header('Location: login.php?password_reset=1');

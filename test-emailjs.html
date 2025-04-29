@@ -1,55 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Test EmailJS Integration</title>
-    <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
-    <script src="emailjs-integration.js"></script>
-</head>
-<body>
-    <h1>Test EmailJS Integration</h1>
+    <title>Contact Form</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+              publicKey: "UvK7p3qdpGga1NnGA",
+            });
+        })();
+    </script>
+    <script type="text/javascript">
+        window.onload = function() {
+            const form = document.getElementById('contact-form');
+            const statusMessage = document.createElement('div');
+            statusMessage.id = 'status-message';
+            form.appendChild(statusMessage);
 
-    <h2>Send Verification Email</h2>
-    <input type="email" id="verificationEmail" placeholder="Recipient Email" />
-    <input type="text" id="verificationLink" placeholder="Verification Link" />
-    <button onclick="testSendVerificationEmail()">Send Verification Email</button>
-    <p id="verificationStatus"></p>
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                statusMessage.textContent = 'Sending...';
 
-    <h2>Send Password Reset Email</h2>
-    <input type="email" id="resetEmail" placeholder="Recipient Email" />
-    <input type="text" id="resetCode" placeholder="Reset Code" />
-    <button onclick="testSendPasswordResetEmail()">Send Password Reset Email</button>
-    <p id="resetStatus"></p>
-
-    <script>
-        function testSendVerificationEmail() {
-            const to_email = document.getElementById('verificationEmail').value;
-            const verification_link = document.getElementById('verificationLink').value;
-            window.sendVerificationEmail(to_email, verification_link)
-                .then((response) => {
-                    console.log('Verification email sent:', response);
-                    document.getElementById('verificationStatus').textContent = 'Verification email sent successfully.';
-                })
-                .catch((error) => {
-                    console.error('Verification email error:', error);
-                    document.getElementById('verificationStatus').textContent = 'Failed to send verification email: ' + error.text;
-                });
-        }
-
-        function testSendPasswordResetEmail() {
-            const to_email = document.getElementById('resetEmail').value;
-            const reset_code = document.getElementById('resetCode').value;
-            window.sendPasswordResetEmail(to_email, reset_code)
-                .then((response) => {
-                    console.log('Password reset email sent:', response);
-                    document.getElementById('resetStatus').textContent = 'Password reset email sent successfully.';
-                })
-                .catch((error) => {
-                    console.error('Password reset email error:', error);
-                    document.getElementById('resetStatus').textContent = 'Failed to send password reset email: ' + error.text;
-                });
+                // Update service ID and template ID to correct values
+                emailjs.sendForm('service_5k4dd1o', 'template_sp0l2zu', this)
+                    .then(() => {
+                        console.log('SUCCESS!');
+                        statusMessage.textContent = 'Message sent successfully!';
+                        form.reset();
+                    }, (error) => {
+                        console.log('FAILED...', error);
+                        statusMessage.textContent = 'Failed to send message: ' + error.text;
+                    });
+            });
         }
     </script>
+</head>
+<body>
+    <form id="contact-form">
+        <!-- To simplify the tutorial, the value is static. -->
+        <input type="hidden" name="time" value="Mar 10 2025 08:46">
+        <label>Name</label>
+        <input type="text" name="name" required>
+        <label>Email</label>
+        <input type="email" name="email" required>
+        <label>Subject</label>
+        <input type="text" name="title" required>
+        <label>Message</label>
+        <textarea name="message" required></textarea>
+        <input type="submit" value="Send">
+    </form>
 </body>
 </html>
