@@ -38,12 +38,17 @@
      * @returns {Promise} Promise resolving on success or rejecting on failure
      */
     function sendPasswordResetEmail(to_email, reset_code) {
-        const templateParams = {
-            to_email: to_email,
-            reset_code: reset_code
-        };
-        return emailjs.send('service_5k4dd1o', 'template_g01z3lg', templateParams);
-    }
+  const templateParams = {
+    to_email:   to_email,
+    reset_code: reset_code
+  };
+  return emailjs.send(
+    'service_5k4dd1o',      // your Service ID
+    'template_g01z3lg',     // your Template ID
+    templateParams
+  );
+}
+
 
     // Expose functions to global scope
     window.sendVerificationEmail = sendVerificationEmail;
