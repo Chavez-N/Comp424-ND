@@ -56,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Secure Login</title>
   <link href="styles.css" rel="stylesheet">
 
-    <head>
   <!-- Other head elements -->
 
   <!-- EmailJS SDK -->
@@ -73,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Your integration script -->
   <script type="text/javascript" src="emailjs-integration.js"></script>
-</head>
+
 
 </head>
 <body>
