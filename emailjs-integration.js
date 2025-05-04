@@ -20,12 +20,16 @@
      * @returns {Promise} Promise resolving on success or rejecting on failure
      */
     function sendVerificationEmail(to_email, verification_link) {
-        const templateParams = {
-            to_email: to_email,
-            verification_link: verification_link
-        };
-        return emailjs.send('service_5k4dd1o', 'template_sp012zu', templateParams);
-    }
+    const templateParams = {
+        to_email: to_email,
+        verification_link: verification_link
+    };
+    return emailjs.send('service_5k4dd1o', 'template_sp012zu', templateParams);
+}
+
+    console.log('Email:', to_email);
+    console.log('Verification Link:', verification_link);
+
 
     /**
      * Send password reset email using EmailJS.
