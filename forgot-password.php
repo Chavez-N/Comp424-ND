@@ -42,6 +42,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Reset Password</title>
   <link href="styles.css" rel="stylesheet">
+
+    <!-- Other head elements -->
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Initialize EmailJS -->
+  <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: 'UvK7p3qdpGga1NnGA',
+      });
+    })();
+  </script>
+
+  <!-- Your integration script -->
+  <script type="text/javascript" src="emailjs-integration.js"></script>
 </head>
 <body>
   <div class="login-container">
