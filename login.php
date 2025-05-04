@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script type="text/javascript">
     (function(){
       emailjs.init({
-        publicKey: 'YOUR_PUBLIC_KEY',
+        publicKey: 'UvK7p3qdpGga1NnGA',
       });
     })();
   </script>
