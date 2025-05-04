@@ -77,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
   </div>
-  <script src="emailjs-integration.js"></script>
   <script>
     document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
       event.preventDefault();
