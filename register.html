@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - COMP 424 Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+     <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - COMP 424 Project</title>
+  <link rel="stylesheet" href="styles.css">
 
-    <!-- 1. Load the EmailJS SDK first -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- 1. Modern EmailJS Browser SDK -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-    <!-- 2. Initialize EmailJS with your Public Key -->
-    <script>
+  <!-- 2. Initialize EmailJS -->
+  <script defer>
+    (function(){
       emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
-    </script>
+    })();
+  </script>
 
-    <!-- 3. Load your EmailJS integration helpers -->
-    <script src="emailjs-integration.js"></script>
-</head>
+  <!-- 3. Your integration helpers -->
+  <script defer src="emailjs-integration.js"></script>
 <body>
     <div class="login-container">
         <div class="login-box">
