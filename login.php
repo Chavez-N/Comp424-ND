@@ -55,6 +55,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Secure Login</title>
   <link href="styles.css" rel="stylesheet">
+
+    <head>
+  <!-- Other head elements -->
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Initialize EmailJS -->
+  <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: 'YOUR_PUBLIC_KEY',
+      });
+    })();
+  </script>
+
+  <!-- Your integration script -->
+  <script type="text/javascript" src="emailjs-integration.js"></script>
+</head>
+
 </head>
 <body>
   <div class="login-container">
