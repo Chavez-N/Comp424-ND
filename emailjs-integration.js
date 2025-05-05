@@ -19,14 +19,14 @@
    * @param {string} verification_link Verification URL
    * @returns {Promise} Promise resolving on success or rejecting on failure
    */
-  function sendVerificationEmail(to_email, verification_link) {
+  function sendVerificationEmail(to_email, reset_code) {
     // Debug: ensure parameters are received correctly
     console.log('Email (sendVerificationEmail):', to_email);
-    console.log('Verification Link:', verification_link);
+    console.log('reset_code:', reset_code);
 
     const templateParams = {
       to_email: to_email,
-      verification_link: verification_link
+      reset_code: reset_code
     };
     return emailjs.send(
       'service_5k4dd1o', // your Service ID
