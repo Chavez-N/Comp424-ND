@@ -96,6 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               statusMessage.textContent = 'Reset code sent successfully via email.';
               statusMessage.style.color = 'green';
               form.reset();
+              //redirect to reset password
+              window.location.href = 'reset-password.php?email=' + encodeURIComponent(data.email);
             })
             .catch(error => {
               statusMessage.textContent = 'Failed to send reset code email.';
